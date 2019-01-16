@@ -1,38 +1,45 @@
 package hao;
-import java.awt.*;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MenuDemo extends JFrame {
-       MenuDemo(){
-           JMenuBar m=new JMenuBar();
-           setJMenuBar(m);
-           Menu file=new Menu("File");
-           MenuItem item1,item2,item3,item4,item5;
-           file.add(item1=new MenuItem("new..."));
-           file.add(item2=new MenuItem("Open..."));
-           file.add(item3=new MenuItem("Close"));
-           file.add(item4=new MenuItem("-"));
-           file.add(item5=new MenuItem("Quit..."));
-           m.add(file);
-           Menu edit=new Menu("Edit");
-           MenuItem item6,item7,item8,item9;
-           file.add(item6=new MenuItem("cut"));
-           file.add(item7=new MenuItem("copy"));
-           file.add(item8=new MenuItem("Paste"));
-           file.add(item9=new MenuItem("-"));
-           m.add(edit);
-           MyMenuHandler handler=new MyMenuHandler();
-           item1.addActionListener(handler);
-           item2.addActionListener(handler);
-           item2.addActionListener(handler);
-           item3.addActionListener(handler);
-           item4.addActionListener(handler);
-           item5.addActionListener(handler);
-           item6.addActionListener(handler);
-           item7.addActionListener(handler);
-           item8.addActionListener(handler);
-           item9.addActionListener(handler);
+class MenuDemo implements ActionListener {
+    JLabel jlab;//创建一个标签对象
+    MenuDemo(){
+        JFrame jfrm=new JFrame("便签");//创建窗口名叫Menu Demo
+        Mianban m=new Mianban();
+        jfrm.setSize(300,500);//设置窗口大小
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置虚拟机的关闭
+        jlab=new JLabel();//创建一个标签
+        JMenuBar jmb=new JMenuBar();//创建顶级菜单（菜单的容器）
+        JMenu jmFile=new JMenu("File");//创建一个菜单
+        JMenuItem jmiOpen=new JMenuItem("Open");//创建菜单项叫Open
+        JMenuItem jmiClose=new JMenuItem("Close");//创建菜单项叫Close
+        JMenuItem jmiSave=new JMenuItem("Save");
+        JMenuItem jmiExit=new JMenuItem("Exit");//创建菜单项叫Exit
+        jmFile.add(jmiOpen);/*把选项添加进菜单里*/
+        jmFile.add(jmiClose);
+        jmFile.add(jmiSave);
+        jmFile.addSeparator();
+        jmFile.add(jmiExit);
+        jmb.add(jmFile);//把菜单添加进菜单容器里
+        JMenu jmFile1=new JMenu("Options");
 
-       }
+        jmiOpen.addActionListener(this);//添加动作监听
+        jmiClose.addActionListener(this);//所有的选项都要添加监听
+        jmiExit.addActionListener(this);
+        jfrm.add(jlab);//给窗口添加标签
+        jfrm.setJMenuBar(jmb);//菜单栏必须通过调用setJMenuBar()添加到框架中
+        jfrm.add(m);
+        jfrm.setVisible(true);
+    }
+    public void actionPerformed(ActionEvent ae){
+        String comStr=ae.getActionCommand();
+        if(comStr.equals("Exit"))System.exit(0);
+    }
 }
+
+
+
 
